@@ -1,41 +1,33 @@
-
-Hotel_California = {
-    "Hotel Name": "Hotel California",
+hotels = {
+    "Hotel California": {
+    "101": {},
+    "102": {},
+    "103": {},
+    "104": {},
+    "105": {},
+}, "Hotel Atlanta": {
+    "101": {},
+    "102": {},
+    "103": {},
+    "104": {},
+    "105": {},
+}, "Hotel Trivago": {
     "101": {},
     "102": {},
     "103": {},
     "104": {},
     "105": {},
 }
-
-Hotel_Atlanta = {
-    "Hotel Name": "Hotel Atlanta",
-    "101": {},
-    "102": {},
-    "103": {},
-    "104": {},
-    "105": {},
 }
 
-Hotel_Trivago = {
-    "Hotel Name": "Hotel Trivago",
-    "101": {},
-    "102": {},
-    "103": {},
-    "104": {},
-    "105": {},
-}
-
-hotels = [Hotel_California, Hotel_Atlanta, Hotel_Trivago]
-
+list_of_hotels = [hotels]
 main_menu = '''
 
 1. Print hotel room status
 2. Check in customer
 3. Check out customer
 4. Manage hotels
-5. Manage room data
-6. Quit
+5. Quit
 
 '''
 
@@ -48,38 +40,29 @@ manage_hotels = '''
 
 '''
 
-room_data = '''
+# Dwayne = {
+#     "occupant_name": "Dwayne",
+#     "phone_number": "111-111-1111",
+#     "prepaid": True
+# }
 
-1. Print hotel list
-2. Save room data
-3. Load room data
-4. Quit
+# Darrell = {
+#     "occupant_name": "Darrell",
+#     "phone_number": "222-222-2222",
+#     "prepaid": False
+# }
 
-'''
+# Dwight = {
+#     "occupant_name": "Dwight",
+#     "phone_number": "333-333-3333",
+#     "prepaid": True
+# }
 
-Dwayne = {
-    "occupant_name": "Dwayne",
-    "phone_number": "111-111-1111",
-    "prepaid": True
-}
-
-Darrell = {
-    "occupant_name": "Darrell",
-    "phone_number": "222-222-2222",
-    "prepaid": False
-}
-
-Dwight = {
-    "occupant_name": "Dwight",
-    "phone_number": "333-333-3333",
-    "prepaid": True
-}
-
-Dilly_Dilly = {
-    "occupant_name": "Dilly Dilly",
-    "phone_number": "444-444-4444",
-    "prepaid": False
-}
+# Dilly_Dilly = {
+#     "occupant_name": "Dilly Dilly",
+#     "phone_number": "444-444-4444",
+#     "prepaid": False
+# }
 
 Delilah = {
     "occupant_name": "Delilah",
@@ -96,8 +79,8 @@ def is_vacant(room):
 
 # function to assign a person to a room
 def check_in(hotel, room, name):
-    if hotels[hotel][room] == {}:
-        hotels[hotel][room] = name
+    if list_of_hotels[hotels][room] == {}:
+        list_of_hotels[hotels][room] = name
     else:
         print(f'{room} is occupied!')
 check_in(0, "105", Delilah)
@@ -133,31 +116,12 @@ def new_customer():
     }
     return name
 
-# function to create a new hotel
-def new_hotel():
-    name = input("What's the name of the hotel? ")
-    name = {
-        "name": name,
-            "101": {},
-            "102": {},
-            "103": {},
-            "104": {},
-            "105": {},
-    }
-    return name
-
-def save_room_info():
-
-def load_room_info():
-
 while True:
     menu_choice = int(input(main_menu))
     # Add if/else statements for each menu item
-    # Print list of hotels
     if menu_choice == 1:
         for hotel in hotels:
             print(hotel)
-    # Check in a customer
     elif menu_choice == 2:
         hotel_name = input("What hotel? ")
         if hotel_name == "Hotel California":
@@ -176,7 +140,6 @@ while True:
             print(hotels)
         else:
             print("Room is full!  Pick another one")
-    # Check out a customer
     elif menu_choice == 3:
         hotel_name = input("What hotel are you checking out of? ")
         if hotel_name == "Hotel California":
@@ -189,47 +152,18 @@ while True:
             print("No such hotel - sorry!")
         room = input("What room are you checking out of? ")
         check_out(hotel_name, room)
-    # Manage hotels
     elif menu_choice == 4:
-        while True:
-            menu_choice = int(input(manage_hotels))
-            # Print list of hotels
-            if menu_choice == 1:
-                print(hotels)
-            # Add a new hotel
-            elif menu_choice == 2:
-                hotels.append(new_hotel())
-            # Remove a hotel
-            elif menu_choice == 3:
-                hotel_name = input("Which hotel are we closing? ")
-                if hotel_name == "Hotel California":
-                    hotel_name = Hotel_California
-                elif hotel_name == "Hotel Atlanta":
-                    hotel_name = Hotel_Atlanta
-                elif hotel_name == "Hotel Trivago":
-                    hotel_name = Hotel_Trivago
-                else:
-                    print("No such hotel - sorry!")
-                hotel_int = hotels.index(hotel_name)
-                del hotels[hotel_int]
-            # Go back to main loop
-            else:
-                break
-    # Manage room data
-    elif menu_choice == 5:
-        while True:
-            menu_choice = int(input(room_data))
-            # Print list of hotels
-            if menu_choice == 1:
-                print(hotels)
-            # save room data
-            elif menu_choice == 2:
-            # load room info
-            elif menu_choice == 2:
-            # Go back to main loop
-            else:
-                break
-    # Exit the programs
+        menu_choice = int(input(manage_hotels))
+        if menu_choice == 1:
+            print(hotels)
+        elif menu_choice == 2:
+            hotel_name = input("What's the name of the new establishment? ")
+            hotels.append(hotel_name)
+        elif menu_choice == 3:
+            hotel_name = input("Which hotel are we closing? ")
+            del hotels[hotel_name]
+        else:
+            break
     else:
         break
 print('Thank you for using the Hotels app!')
