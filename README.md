@@ -1,1 +1,1 @@
-Python hotel app
+Exercises for Python-105
