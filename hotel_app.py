@@ -68,7 +68,7 @@ def check_in(inp):
                 name = new_customer()
                 hotels[index][room] = name
             else:
-                print(f'{room} is occupied!')
+                print(f'Room {room} is occupied!')
 
 # function to check a person out of the room and return the person dictionary
 def check_out(inp):
