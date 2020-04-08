@@ -97,6 +97,16 @@ main_menu = '''
 
 '''
 
+checking_in = '''
+
+1. Print hotel list
+2. Bed Preferance
+3. No Bed Preferance
+4. Pet Friendly, Please
+5. Quit
+
+'''
+
 manage_hotels = '''
 
 1. Print hotel list
@@ -117,16 +127,15 @@ room_data = '''
 
 # function to check a person into a room
 def check_in(inp):
-    
     for index in range(len(hotels)):
         if hotels[index]["Hotel Name"] == inp:
             inp = index
             room = input("What room? ")
-            if hotels[index][room] == {}:
-                name = new_customer()
-                hotels[index][room] = name
-            else:
-                print(f'Room {room} is occupied!')
+            # if hotels[index][room] == {}:
+            name = new_customer()
+            hotels[index][room] = name
+            # else:
+            #     print(f'Room {room} is occupied!')
 
 # function to check a person out of the room and return the person dictionary
 def check_out(inp):
@@ -164,6 +173,7 @@ def new_hotel():
     name = {
         "Hotel Name": name,
             "101": {
+                "checked i"
                 "bed type": "king",
                 "pet friendly": True,
             },
@@ -190,21 +200,41 @@ def new_hotel():
     }
     return name
 
+def int_room(each_room):
+    if int(each_room) == 101 or int(each_room) == 102 or int(each_room) == 103 or int(each_room) == 104 or int(each_room) == 105 or int(each_room) == 106:
+        return int(each_room)
+
 # request room type based off bed
 def request_room_type(inp, room_type):
+    print(room_type)
     for index in range(len(hotels)):
         if hotels[index]["Hotel Name"] == inp:
             inp = index
-            if hotels[inp][room]["bed type"] == room_type:
-                if hotels[inp][room]["bed type"] == 
-                guest_info = hotels[inp][room]
-                hotels[inp][room] = {}
-                return guest_info
-            else:
-                print("They haven't paid! Keep them here forever.")
+            for each_room in hotels[inp]:
+                try:
+                    try:
+                        int_room(each_room)
+                        if hotels[inp][each_room]['bed type'] == room_type:
+                            name = new_customer()
+                            hotels[inp][each_room] = name
+                            break
+                    except KeyError:
+                        pass
+                except ValueError:
+                    pass
+        else:
+            pass
+
 
 # request pet friendly room
 def request_pet_friendly(inp):
+    pet_name = input("What's the little guy's name? ")
+    for index in range(len(hotels)):
+        for room in hotels[index]:
+            if room['pet friendly'] == True:
+                print(f"You and {pet_name} will be very comfortable in {hotels[index][room]}")
+                name = new_customer()
+                hotels[index][room] = name
 
 # save room data
 def save_room_info():
@@ -231,14 +261,23 @@ while True:
             print(hotel)
     # Check in a customer
     elif menu_choice == 2:
-        hotel_name = input("What hotel? ")
-        preferance = input("Do you have a bed preferance? ").lower()
-        check_in(hotel_name)
-        if preferance == "yes":
-            rm_type = input("King, Queen, or Double Twin? ").lower()
-            request_room_type(hotel_name, rm_type)
-        else:
-            break
+        while True:
+            menu_choice = int(input(checking_in))
+            if menu_choice == 1:
+                for hotel in hotels:
+                    print(hotel)
+            elif menu_choice == 2:
+                hotel_name = input("What hotel? ")
+                rm_type = input("King, Queen, or Double Twin? ").lower()
+                request_room_type(hotel_name, rm_type)
+            elif menu_choice == 3:
+                hotel_name = input("What hotel? ")
+                check_in(hotel_name)
+            elif menu_choice == 4:
+                hotel_name = input("What hotel? ")
+                request_pet_friendly(hotel_name)
+            else:
+                break
     # Check out a customer
     elif menu_choice == 3:
         hotel_name = input("What hotel are you checking out of? ")
