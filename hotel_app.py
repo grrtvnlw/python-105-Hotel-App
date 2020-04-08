@@ -58,14 +58,7 @@ room_data = '''
 
 '''
 
-# function to check if a room is occupied
-def is_vacant(room):
-    if hotel[room] == {}:
-        print(f"{room} is empty.")
-    else:
-        print(f'{room} is occupied by {hotel[room]["occupant_name"]}.')
-
-# function to assign a person to a room
+# function to check a person into a room
 def check_in(inp):
     for index in range(len(hotels)):
         if hotels[index]["Hotel Name"] == inp:
