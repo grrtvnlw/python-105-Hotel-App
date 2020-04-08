@@ -105,7 +105,7 @@ def new_customer():
     prepay = input("Will the customer be pre-paying? True or False ")
     if prepay == "True":
         prepay = True
-    elif prepay == "False":
+    else:
         prepay = False
     name = {
         "name": name,
@@ -158,10 +158,11 @@ while True:
     elif menu_choice == 3:
         hotel_name = input("What hotel are you checking out of? ")
         check_out(hotel_name)
-    # Manage hotels
+    # Check vacancy
     elif menu_choice == 4:
         hotel_name = input("What hotel? ")
         is_vacant(hotel_name)
+    # Manage hotels
     elif menu_choice == 5:
         while True:
             menu_choice = int(input(manage_hotels))
@@ -188,7 +189,7 @@ while True:
             elif menu_choice == 2:
                 save_room_info()
                 print("Room data has been successfully saved.")
-            # load room info
+            # load room data
             elif menu_choice == 3:
                 load_room_info()
                 print("Room data has been successfully loaded.")
