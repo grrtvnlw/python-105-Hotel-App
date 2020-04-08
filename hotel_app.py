@@ -34,9 +34,10 @@ main_menu = '''
 1. Print hotel room status
 2. Check in customer
 3. Check out customer
-4. Manage hotels
-5. Manage room data
-6. Quit
+4. Check vacancy
+5. Manage hotels
+6. Manage room data
+7. Quit
 
 '''
 
@@ -57,6 +58,16 @@ room_data = '''
 4. Quit
 
 '''
+# function to check if a room is occupied
+def is_vacant(inp):
+    for index in range(len(hotels)):
+        if hotels[index]["Hotel Name"] == inp:
+            inp = index
+            room = input("What room? ")
+            if hotels[inp][room] == {}:
+                print(f"{room} is empty.")
+            else:
+                print(f'{room} is occupied by {hotels[inp][room]["name"]}.')
 
 # function to check a person into a room
 def check_in(inp):
@@ -73,16 +84,19 @@ def check_in(inp):
 # function to check a person out of the room and return the person dictionary
 def check_out(inp):
     for index in range(len(hotels)):
-        if hotels[index]["Hotel Name"] == inp:
-            inp = index
-            room = input("What room are you checking out of? ")
-            if hotels[inp][room]["prepaid"] == True:
-                print("They're all paid up! Check them out.")
-                guest_info = hotels[inp][room]
-                hotels[inp][room] = {}
-                return guest_info
-            else:
-                print("They haven't paid! Keep them here forever.")
+        try:
+            if hotels[index]["Hotel Name"] == inp:
+                inp = index
+                room = input("What room are you checking out of? ")
+                if hotels[inp][room]["prepaid"] == True:
+                    print("They're all paid up! Check them out.")
+                    guest_info = hotels[inp][room]
+                    hotels[inp][room] = {}
+                    return guest_info
+                else:
+                    print("They haven't paid! Keep them here forever.")
+        except KeyError:
+            pass
 
 # function to create a new customer
 def new_customer():
@@ -124,11 +138,11 @@ def load_room_info():
     file_name = "room_data.json"
     with open(file_name, "r") as file_handle:
         new_hotels = json.load(file_handle)
-        try:
-            for item in range(len(new_hotels)):
+        for item in range(len(new_hotels)):
+            try:
                 hotels[item] = new_hotels[item]
-        except IndexError:
-            hotels.append(new_hotels[item])
+            except IndexError:
+                hotels.append(new_hotels[item])
 
 while True:
     menu_choice = int(input(main_menu))
@@ -146,6 +160,9 @@ while True:
         check_out(hotel_name)
     # Manage hotels
     elif menu_choice == 4:
+        hotel_name = input("What hotel? ")
+        is_vacant(hotel_name)
+    elif menu_choice == 5:
         while True:
             menu_choice = int(input(manage_hotels))
             # Print list of hotels
@@ -161,7 +178,7 @@ while True:
             else:
                 break
     # Manage room data
-    elif menu_choice == 5:
+    elif menu_choice == 6:
         while True:
             menu_choice = int(input(room_data))
             # Print list of hotels
