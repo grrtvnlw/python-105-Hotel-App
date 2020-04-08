@@ -111,7 +111,7 @@ def new_customer():
 def new_hotel():
     name = input("What's the name of the hotel? ")
     name = {
-        "name": name,
+        "Hotel Name": name,
             "101": {},
             "102": {},
             "103": {},
@@ -131,8 +131,11 @@ def load_room_info():
     file_name = "room_data.json"
     with open(file_name, "r") as file_handle:
         new_hotels = json.load(file_handle)
-        for item in range(len(new_hotels)):
-            hotels[item] = new_hotels[item]
+        try:
+            for item in range(len(new_hotels)):
+                hotels[item] = new_hotels[item]
+        except IndexError:
+            hotels.append(new_hotels[item])
 
 while True:
     menu_choice = int(input(main_menu))
@@ -144,6 +147,7 @@ while True:
     elif menu_choice == 2:
         hotel_name = input("What hotel? ")
         check_in(hotel_name)
+    # Check out a customer
     elif menu_choice == 3:
         hotel_name = input("What hotel are you checking out of? ")
         check_out(hotel_name)
@@ -160,7 +164,7 @@ while True:
             # Remove a hotel
             elif menu_choice == 3:
                 hotel_name = input("Which hotel are we closing? ")
-                hotels[:] = [d for d in hotels if d.get('Hotel Name') != hotel_name]
+                hotels[:] = [hotel for hotel in hotels if hotel.get('Hotel Name') != hotel_name]
             else:
                 break
     # Manage room data
